@@ -2,7 +2,10 @@ package com.marlonfrazao.desafiozup.dto;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import com.marlonfrazao.desafiozup.entities.Endereco;
 import com.marlonfrazao.desafiozup.entities.Usuario;
 
 public class UsuarioDTO implements Serializable{
@@ -14,6 +17,8 @@ public class UsuarioDTO implements Serializable{
 	private String email;
 	private String cpf;
 	private Date dataNascimento;
+	
+	Set<EnderecoDTO> enderecos = new HashSet<>();
 	
 	public UsuarioDTO() {}
 	
@@ -31,6 +36,11 @@ public class UsuarioDTO implements Serializable{
 		email = entity.getEmail();
 		cpf = entity.getCpf();
 		dataNascimento = entity.getDataNascimento();
+	}
+	
+	public UsuarioDTO(Usuario entity, Set<Endereco> enderecos) {
+		this(entity);
+		enderecos.forEach(e -> this.enderecos.add(new EnderecoDTO(e)));
 	}
 
 	public Long getId() {
