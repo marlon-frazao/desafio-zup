@@ -7,7 +7,9 @@ import java.util.Set;
 
 import com.marlonfrazao.desafiozup.entities.Endereco;
 import com.marlonfrazao.desafiozup.entities.Usuario;
+import com.marlonfrazao.desafiozup.service.validation.UsuarioValid;
 
+@UsuarioValid
 public class UsuarioDTO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -81,5 +83,9 @@ public class UsuarioDTO implements Serializable{
 
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
+	}
+
+	public Set<EnderecoDTO> getEnderecos() {
+		return enderecos;
 	}
 }
