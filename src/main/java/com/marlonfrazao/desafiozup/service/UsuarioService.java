@@ -1,14 +1,14 @@
 package com.marlonfrazao.desafiozup.service;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.marlonfrazao.desafiozup.dto.UsuarioDTO;
 import com.marlonfrazao.desafiozup.entities.Usuario;
 import com.marlonfrazao.desafiozup.repositories.EnderecoRepository;
 import com.marlonfrazao.desafiozup.repositories.UsuarioRepository;
+import com.marlonfrazao.desafiozup.service.exceptions.ResourceNotFoundException;
 
 @Service
 public class UsuarioService {
@@ -18,6 +18,11 @@ public class UsuarioService {
 	
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	
+	@Transactional(readOnly = true)
+	public UsuarioDTO findById(Long id) {
+		return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado!")).convert();
+	}
 	
 	@Transactional
 	public UsuarioDTO insert(UsuarioDTO dto) {

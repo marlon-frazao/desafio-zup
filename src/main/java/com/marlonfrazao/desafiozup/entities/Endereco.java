@@ -29,7 +29,7 @@ public class Endereco implements Serializable{
 	private String cep;
 	
 	@ManyToMany(mappedBy = "enderecos")
-	Set<Usuario> usuarios = new HashSet<>();
+	private Set<Usuario> usuarios = new HashSet<>();
 	
 	public Endereco() {}
 	

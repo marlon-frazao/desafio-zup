@@ -1,9 +1,8 @@
 package com.marlonfrazao.desafiozup.service;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.marlonfrazao.desafiozup.dto.EnderecoDTO;
 import com.marlonfrazao.desafiozup.entities.Endereco;

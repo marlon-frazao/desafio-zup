@@ -16,10 +16,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.marlonfrazao.desafiozup.dto.UsuarioDTO;
+
 
 @Entity
 @Table(name = "tb_usuario")
-public class Usuario implements Serializable{
+public class Usuario implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -36,8 +38,10 @@ public class Usuario implements Serializable{
 	private Date dataNascimento;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "tb_usuario_endereco", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "endereco_id"))
-	Set<Endereco> enderecos = new HashSet<>();
+	@JoinTable(name = "tb_usuario_endereco", 
+				joinColumns = @JoinColumn(name = "usuario_id"), 
+				inverseJoinColumns = @JoinColumn(name = "endereco_id"))
+	private Set<Endereco> enderecos = new HashSet<>();
 	
 	public Usuario() {}
 	
@@ -103,5 +107,9 @@ public class Usuario implements Serializable{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	
+	public UsuarioDTO convert() {
+		return new UsuarioDTO(this, enderecos);
 	}
 }
