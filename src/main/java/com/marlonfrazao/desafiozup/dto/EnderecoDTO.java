@@ -4,41 +4,42 @@ import java.io.Serializable;
 
 import com.marlonfrazao.desafiozup.entities.Endereco;
 
-public class EnderecoDTO implements Serializable{
+public class EnderecoDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private Long id;
 	private String logradouro;
 	private String numero;
 	private String complemento;
 	private String bairro;
-	private String cidade;
-	private String estado;
+	private String localidade;
+	private String uf;
 	private String cep;
-	
-	public EnderecoDTO() {}
 
-	public EnderecoDTO(Long id, String logradouro, String numero, String complemento, String bairro, String cidade,
-			String estado, String cep) {
+	public EnderecoDTO() {
+	}
+
+	public EnderecoDTO(Long id, String logradouro, String numero, String complemento, String bairro, String localidade,
+			String uf, String cep) {
 		this.id = id;
 		this.logradouro = logradouro;
 		this.numero = numero;
 		this.complemento = complemento;
 		this.bairro = bairro;
-		this.cidade = cidade;
-		this.estado = estado;
+		this.localidade = localidade;
+		this.uf = uf;
 		this.cep = cep;
 	}
-	
+
 	public EnderecoDTO(Endereco entity) {
 		id = entity.getId();
 		logradouro = entity.getLogradouro();
 		numero = entity.getNumero();
 		complemento = entity.getComplemento();
 		bairro = entity.getBairro();
-		cidade = entity.getCidade();
-		estado = entity.getEstado();
+		localidade = entity.getCidade();
+		uf = entity.getEstado();
 		cep = entity.getCep();
 	}
 
@@ -82,20 +83,20 @@ public class EnderecoDTO implements Serializable{
 		this.bairro = bairro;
 	}
 
-	public String getCidade() {
-		return cidade;
+	public String getLocalidade() {
+		return localidade;
 	}
 
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
+	public void setLocalidade(String localidade) {
+		this.localidade = localidade;
 	}
 
-	public String getEstado() {
-		return estado;
+	public String getUf() {
+		return uf;
 	}
 
-	public void setEstado(String estado) {
-		this.estado = estado;
+	public void setUf(String uf) {
+		this.uf = uf;
 	}
 
 	public String getCep() {

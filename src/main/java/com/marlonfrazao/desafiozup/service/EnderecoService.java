@@ -26,8 +26,8 @@ public class EnderecoService {
 		entity.setNumero(dto.getNumero());
 		entity.setComplemento(dto.getComplemento());
 		entity.setBairro(dto.getBairro());
-		entity.setCidade(dto.getCidade());
-		entity.setEstado(dto.getEstado());
+		entity.setCidade(dto.getLocalidade());
+		entity.setEstado(dto.getUf());
 		entity.setCep(dto.getCep());
 	}
 }
