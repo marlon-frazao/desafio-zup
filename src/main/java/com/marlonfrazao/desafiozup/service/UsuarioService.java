@@ -12,18 +12,21 @@ import com.marlonfrazao.desafiozup.service.exceptions.ResourceNotFoundException;
 
 @Service
 public class UsuarioService {
-	
+
 	@Autowired
 	private UsuarioRepository repository;
-	
+
 	@Autowired
 	private EnderecoRepository enderecoRepository;
-	
+
 	@Transactional(readOnly = true)
 	public UsuarioDTO findById(Long id) {
-		return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado!")).convert();
+		return repository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException(
+						"Houve um problema. Parece que esse usuário não está presente em nossa base de dados."))
+				.convert();
 	}
-	
+
 	@Transactional
 	public UsuarioDTO insert(UsuarioDTO dto) {
 		Usuario entity = new Usuario();
@@ -36,9 +39,9 @@ public class UsuarioService {
 		entity.setEmail(dto.getEmail());
 		entity.setCpf(dto.getCpf());
 		entity.setDataNascimento(dto.getDataNascimento());
-		
+
 		entity.getEnderecos().clear();
-		
+
 		dto.getEnderecos().forEach(e -> entity.getEnderecos().add(enderecoRepository.getOne(e.getId())));
 	}
 }

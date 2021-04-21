@@ -4,8 +4,6 @@ import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,18 +26,12 @@ public class EnderecoResource {
 	
 	@PostMapping
 	public ResponseEntity<EnderecoDTO> insert(@RequestBody EnderecoDTO dto) {
-		EnderecoDTO newDto = getCep(dto.getCep()).getBody();
+		EnderecoDTO newDto = cepService.buscaEnderecoPorCep(dto.getCep());
 		newDto.setNumero(dto.getNumero());
 		newDto.setComplemento(dto.getComplemento());
 		newDto = service.insert(newDto);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newDto.getId()).toUri();
 		return ResponseEntity.created(uri).body(newDto);
-	}
-	
-	@GetMapping("/{cep}")
-	public ResponseEntity<EnderecoDTO> getCep(@PathVariable String cep) {
-		EnderecoDTO endereco = cepService.buscaEnderecoPorCep(cep);
-		return ResponseEntity.ok().body(endereco);
 	}
 }
