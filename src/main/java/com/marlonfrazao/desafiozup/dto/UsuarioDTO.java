@@ -5,6 +5,11 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.validator.constraints.br.CPF;
+
 import com.marlonfrazao.desafiozup.entities.Endereco;
 import com.marlonfrazao.desafiozup.entities.Usuario;
 import com.marlonfrazao.desafiozup.service.validation.UsuarioValid;
@@ -15,8 +20,16 @@ public class UsuarioDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
+	
+	@NotBlank
 	private String nome;
+	
+	@NotBlank
+	@Email
 	private String email;
+	
+	@NotBlank
+	@CPF
 	private String cpf;
 	private Date dataNascimento;
 	

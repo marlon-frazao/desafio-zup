@@ -33,9 +33,6 @@ public class ResourceExceptionHandler {
 		StandardError err = new StandardError();
 		err.setTimestamp(Instant.now());
 		err.setStatus(status.value());
-		err.setError(error);
-		err.setMessage(e.getMessage());
-		err.setPath(request.getRequestURI());
 		
 		if (e instanceof MethodArgumentNotValidException) {
 			ValidationError vError = new ValidationError(err);
