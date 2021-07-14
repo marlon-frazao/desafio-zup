@@ -38,8 +38,8 @@ public class EnderecoDTO implements Serializable {
 		numero = entity.getNumero();
 		complemento = entity.getComplemento();
 		bairro = entity.getBairro();
-		localidade = entity.getCidade();
-		uf = entity.getEstado();
+		localidade = entity.getLocalidade();
+		uf = entity.getUf();
 		cep = entity.getCep();
 	}
 

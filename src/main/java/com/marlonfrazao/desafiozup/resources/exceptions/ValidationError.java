@@ -13,6 +13,9 @@ public class ValidationError extends StandardError {
 		super();
 		setTimestamp(err.getTimestamp());
 		setStatus(err.getStatus());
+		setError(err.getError());
+		setMessage(err.getMessage());
+		setPath(err.getPath());
 	}
 
 	public List<FieldMessage> getErrors() {

@@ -32,13 +32,17 @@ public class ResourceExceptionHandler {
 	private StandardError getStandardError(Exception e, HttpServletRequest request, HttpStatus status, String error) {
 		StandardError err = new StandardError();
 		err.setTimestamp(Instant.now());
-		err.setStatus(status.value());
+		err.setStatus(status.value());	
 		
 		if (e instanceof MethodArgumentNotValidException) {
 			ValidationError vError = new ValidationError(err);
 			((MethodArgumentNotValidException) e).getBindingResult().getFieldErrors().forEach(f -> vError.addError(f.getField(), f.getDefaultMessage()));
 			return vError;
 		}
+		
+		err.setError(error);
+		err.setMessage(e.getMessage());
+		err.setPath(request.getRequestURI());
 
 		return err;
 	}

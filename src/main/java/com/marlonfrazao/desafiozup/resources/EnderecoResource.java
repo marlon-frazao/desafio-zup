@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.marlonfrazao.desafiozup.dto.EnderecoDTO;
-import com.marlonfrazao.desafiozup.service.CepService;
 import com.marlonfrazao.desafiozup.service.EnderecoService;
 
 @RestController
@@ -21,15 +20,10 @@ public class EnderecoResource {
 	@Autowired
 	private EnderecoService service;
 	
-	@Autowired
-    private CepService cepService;
-	
 	@PostMapping
 	public ResponseEntity<EnderecoDTO> insert(@RequestBody EnderecoDTO dto) {
-		EnderecoDTO newDto = cepService.buscaEnderecoPorCep(dto.getCep());
-		newDto.setNumero(dto.getNumero());
-		newDto.setComplemento(dto.getComplemento());
-		newDto = service.insert(newDto);
+		EnderecoDTO newDto = new EnderecoDTO();
+		newDto = service.insert(dto);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newDto.getId()).toUri();
 		return ResponseEntity.created(uri).body(newDto);
