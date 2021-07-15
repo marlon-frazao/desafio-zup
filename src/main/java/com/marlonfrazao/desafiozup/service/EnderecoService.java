@@ -42,6 +42,7 @@ public class EnderecoService {
 		}
 	}
 	
+	@Transactional(readOnly = true)
 	public Endereco getOne(Long id) {
 		return repository.getOne(id);
 	}
