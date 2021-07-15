@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.marlonfrazao.desafiozup.dto.EnderecoResponseDTO;
+
 @Entity
 @Table(name = "tb_endereco")
 public class Endereco implements Serializable{
@@ -136,5 +138,9 @@ public class Endereco implements Serializable{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	
+	public EnderecoResponseDTO convert() {
+		return new EnderecoResponseDTO(this);
 	}
 }

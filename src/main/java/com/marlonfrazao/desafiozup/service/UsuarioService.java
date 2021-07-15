@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +14,6 @@ import com.marlonfrazao.desafiozup.dto.UsuarioFormDTO;
 import com.marlonfrazao.desafiozup.dto.UsuarioResponseDTO;
 import com.marlonfrazao.desafiozup.entities.Usuario;
 import com.marlonfrazao.desafiozup.repositories.UsuarioRepository;
-import com.marlonfrazao.desafiozup.service.exceptions.DatabaseException;
 import com.marlonfrazao.desafiozup.service.exceptions.ResourceNotFoundException;
 
 @Service
@@ -67,8 +65,6 @@ public class UsuarioService {
 			repository.deleteById(id);
 		} catch(EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException("ID não encontrado!");
-		} catch(DataIntegrityViolationException  e) {
-			throw new DatabaseException("Violação de integridade do banco de dados!");
 		}
 	}
 
