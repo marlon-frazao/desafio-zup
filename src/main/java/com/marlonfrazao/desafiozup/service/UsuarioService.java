@@ -4,11 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.marlonfrazao.desafiozup.dto.UsuarioDTO;
+import com.marlonfrazao.desafiozup.dto.UsuarioFormDTO;
+import com.marlonfrazao.desafiozup.dto.UsuarioResponseDTO;
 import com.marlonfrazao.desafiozup.entities.Usuario;
 import com.marlonfrazao.desafiozup.repositories.EnderecoRepository;
 import com.marlonfrazao.desafiozup.repositories.UsuarioRepository;
-import com.marlonfrazao.desafiozup.service.exceptions.ResourceNotFoundException;
 
 @Service
 public class UsuarioService {
@@ -20,21 +20,18 @@ public class UsuarioService {
 	private EnderecoRepository enderecoRepository;
 
 	@Transactional(readOnly = true)
-	public UsuarioDTO findById(Long id) {
-		return repository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException(
-						"Houve um problema. Parece que esse usuário não está presente em nossa base de dados."))
-				.convert();
+	public UsuarioResponseDTO findByEmail(String email) {
+		return repository.findByEmail(email).convert();
 	}
 
 	@Transactional
-	public UsuarioDTO insert(UsuarioDTO dto) {
+	public UsuarioFormDTO insert(UsuarioFormDTO dto) {
 		Usuario entity = new Usuario();
 		copyDtoToEntity(dto, entity);
-		return new UsuarioDTO(repository.save(entity));
+		return new UsuarioFormDTO(repository.save(entity));
 	}
 
-	private void copyDtoToEntity(UsuarioDTO dto, Usuario entity) {
+	private void copyDtoToEntity(UsuarioFormDTO dto, Usuario entity) {
 		entity.setNome(dto.getNome());
 		entity.setEmail(dto.getEmail());
 		entity.setCpf(dto.getCpf());

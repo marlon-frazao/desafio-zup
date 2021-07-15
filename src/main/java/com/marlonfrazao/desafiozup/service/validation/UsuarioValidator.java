@@ -8,11 +8,11 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.marlonfrazao.desafiozup.dto.UsuarioDTO;
+import com.marlonfrazao.desafiozup.dto.UsuarioFormDTO;
 import com.marlonfrazao.desafiozup.repositories.UsuarioRepository;
 import com.marlonfrazao.desafiozup.resources.exceptions.FieldMessage;
 
-public class UsuarioValidator implements ConstraintValidator<UsuarioValid, UsuarioDTO> {
+public class UsuarioValidator implements ConstraintValidator<UsuarioValid, UsuarioFormDTO> {
 
 	@Autowired
 	private UsuarioRepository repository;
@@ -22,7 +22,7 @@ public class UsuarioValidator implements ConstraintValidator<UsuarioValid, Usuar
 	}
 	
 	@Override
-	public boolean isValid(UsuarioDTO dto, ConstraintValidatorContext context) {
+	public boolean isValid(UsuarioFormDTO dto, ConstraintValidatorContext context) {
 
 		List<FieldMessage> list = new ArrayList<>();
 		

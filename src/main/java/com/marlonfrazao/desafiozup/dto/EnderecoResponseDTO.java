@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import com.marlonfrazao.desafiozup.entities.Endereco;
 
-public class EnderecoDTO implements Serializable {
+public class EnderecoResponseDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -17,10 +17,10 @@ public class EnderecoDTO implements Serializable {
 	private String uf;
 	private String cep;
 
-	public EnderecoDTO() {
+	public EnderecoResponseDTO() {
 	}
 
-	public EnderecoDTO(Long id, String logradouro, String numero, String complemento, String bairro, String localidade,
+	public EnderecoResponseDTO(Long id, String logradouro, String numero, String complemento, String bairro, String localidade,
 			String uf, String cep) {
 		this.id = id;
 		this.logradouro = logradouro;
@@ -32,7 +32,7 @@ public class EnderecoDTO implements Serializable {
 		this.cep = cep;
 	}
 
-	public EnderecoDTO(Endereco entity) {
+	public EnderecoResponseDTO(Endereco entity) {
 		id = entity.getId();
 		logradouro = entity.getLogradouro();
 		numero = entity.getNumero();

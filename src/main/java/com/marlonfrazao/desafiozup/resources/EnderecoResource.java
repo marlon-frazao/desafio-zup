@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.marlonfrazao.desafiozup.dto.EnderecoDTO;
+import com.marlonfrazao.desafiozup.dto.EnderecoResponseDTO;
+import com.marlonfrazao.desafiozup.dto.EnderecoFormDTO;
 import com.marlonfrazao.desafiozup.service.EnderecoService;
 
 @RestController
@@ -21,8 +22,8 @@ public class EnderecoResource {
 	private EnderecoService service;
 	
 	@PostMapping
-	public ResponseEntity<EnderecoDTO> insert(@RequestBody EnderecoDTO dto) {
-		EnderecoDTO newDto = new EnderecoDTO();
+	public ResponseEntity<EnderecoResponseDTO> insert(@RequestBody EnderecoFormDTO dto) {
+		EnderecoResponseDTO newDto = new EnderecoResponseDTO();
 		newDto = service.insert(dto);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newDto.getId()).toUri();

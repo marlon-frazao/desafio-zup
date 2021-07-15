@@ -15,11 +15,9 @@ import com.marlonfrazao.desafiozup.entities.Usuario;
 import com.marlonfrazao.desafiozup.service.validation.UsuarioValid;
 
 @UsuarioValid
-public class UsuarioDTO implements Serializable{
+public class UsuarioFormDTO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	
-	private Long id;
 	
 	@NotBlank
 	private String nome;
@@ -33,37 +31,27 @@ public class UsuarioDTO implements Serializable{
 	private String cpf;
 	private Date dataNascimento;
 	
-	Set<EnderecoDTO> enderecos = new HashSet<>();
+	Set<EnderecoResponseDTO> enderecos = new HashSet<>();
 	
-	public UsuarioDTO() {}
+	public UsuarioFormDTO() {}
 	
-	public UsuarioDTO(Long id, String nome, String email, String cpf, Date dataNascimento) {
-		this.id = id;
+	public UsuarioFormDTO(String nome, String email, String cpf, Date dataNascimento) {
 		this.nome = nome;
 		this.email = email;
 		this.cpf = cpf;
 		this.dataNascimento = dataNascimento;
 	}
 	
-	public UsuarioDTO(Usuario entity) {
-		id = entity.getId();
+	public UsuarioFormDTO(Usuario entity) {
 		nome = entity.getNome();
 		email = entity.getEmail();
 		cpf = entity.getCpf();
 		dataNascimento = entity.getDataNascimento();
 	}
 	
-	public UsuarioDTO(Usuario entity, Set<Endereco> enderecos) {
+	public UsuarioFormDTO(Usuario entity, Set<Endereco> enderecos) {
 		this(entity);
-		enderecos.forEach(e -> this.enderecos.add(new EnderecoDTO(e)));
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+		enderecos.forEach(e -> this.enderecos.add(new EnderecoResponseDTO(e)));
 	}
 
 	public String getNome() {
@@ -98,7 +86,7 @@ public class UsuarioDTO implements Serializable{
 		this.dataNascimento = dataNascimento;
 	}
 
-	public Set<EnderecoDTO> getEnderecos() {
+	public Set<EnderecoResponseDTO> getEnderecos() {
 		return enderecos;
 	}
 }

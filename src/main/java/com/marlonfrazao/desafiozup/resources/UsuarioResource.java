@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.marlonfrazao.desafiozup.dto.UsuarioDTO;
+import com.marlonfrazao.desafiozup.dto.UsuarioFormDTO;
+import com.marlonfrazao.desafiozup.dto.UsuarioResponseDTO;
 import com.marlonfrazao.desafiozup.service.UsuarioService;
 
 @RestController
@@ -24,15 +25,15 @@ public class UsuarioResource {
 	@Autowired
 	private UsuarioService service;
 	
-	@GetMapping(value = "/{id}")
-	public ResponseEntity<UsuarioDTO> findById(@PathVariable Long id){
-		return ResponseEntity.ok().body(service.findById(id));
+	@GetMapping(value = "/{email}")
+	public ResponseEntity<UsuarioResponseDTO> findById(@PathVariable String email){
+		return ResponseEntity.ok().body(service.findByEmail(email));
 	}
 	
 	@PostMapping
-	public ResponseEntity<UsuarioDTO> insert(@Valid @RequestBody UsuarioDTO dto) {
-		UsuarioDTO newDto = service.insert(dto);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newDto.getId()).toUri();
+	public ResponseEntity<UsuarioFormDTO> insert(@Valid @RequestBody UsuarioFormDTO dto) {
+		UsuarioFormDTO newDto = service.insert(dto);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{email}").buildAndExpand(newDto.getEmail()).toUri();
 		return ResponseEntity.created(uri).body(newDto);
 	}
 }

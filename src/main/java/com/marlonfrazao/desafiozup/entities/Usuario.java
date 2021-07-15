@@ -16,7 +16,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.marlonfrazao.desafiozup.dto.UsuarioDTO;
+import com.marlonfrazao.desafiozup.dto.UsuarioResponseDTO;
 
 
 @Entity
@@ -109,7 +109,7 @@ public class Usuario implements Serializable {
 		return true;
 	}
 	
-	public UsuarioDTO convert() {
-		return new UsuarioDTO(this, enderecos);
+	public UsuarioResponseDTO convert() {
+		return new UsuarioResponseDTO(this, enderecos);
 	}
 }
