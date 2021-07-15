@@ -7,8 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.marlonfrazao.desafiozup.dto.UsuarioFormDTO;
 import com.marlonfrazao.desafiozup.dto.UsuarioResponseDTO;
 import com.marlonfrazao.desafiozup.entities.Usuario;
-import com.marlonfrazao.desafiozup.repositories.EnderecoRepository;
 import com.marlonfrazao.desafiozup.repositories.UsuarioRepository;
+import com.marlonfrazao.desafiozup.service.exceptions.ResourceNotFoundException;
 
 @Service
 public class UsuarioService {
@@ -17,11 +17,15 @@ public class UsuarioService {
 	private UsuarioRepository repository;
 
 	@Autowired
-	private EnderecoRepository enderecoRepository;
+	private EnderecoService enderecoService;
 
 	@Transactional(readOnly = true)
 	public UsuarioResponseDTO findByEmail(String email) {
-		return repository.findByEmail(email).convert();
+		try {
+			return repository.findByEmail(email).convert();
+		} catch (Exception e) {
+			throw new ResourceNotFoundException("Usuário não encontrado");
+		}
 	}
 
 	@Transactional
@@ -39,6 +43,6 @@ public class UsuarioService {
 
 		entity.getEnderecos().clear();
 
-		dto.getEnderecos().forEach(e -> entity.getEnderecos().add(enderecoRepository.getOne(e.getId())));
+		dto.getEnderecos().forEach(e -> entity.getEnderecos().add(enderecoService.getOne(e.getId())));
 	}
 }

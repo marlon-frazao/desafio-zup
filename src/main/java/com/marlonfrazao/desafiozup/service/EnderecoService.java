@@ -40,5 +40,9 @@ public class EnderecoService {
 		} catch(FeignException e) {
 			throw new ResourceNotFoundException("CEP não encontrado!");
 		}
-	}		
+	}
+	
+	public Endereco getOne(Long id) {
+		return repository.getOne(id);
+	}
 }
