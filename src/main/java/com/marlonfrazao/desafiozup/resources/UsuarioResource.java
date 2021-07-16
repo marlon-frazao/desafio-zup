@@ -45,14 +45,14 @@ public class UsuarioResource {
 		return ResponseEntity.created(uri).body(newDto);
 	}
 	
-	@PutMapping(value = "/{id}")
-	public ResponseEntity<UsuarioResponseDTO> update(@PathVariable Long id, @RequestBody UsuarioFormDTO dto) {
-		return ResponseEntity.ok().body(service.update(id, dto));
+	@PutMapping(value = "/{email}")
+	public ResponseEntity<UsuarioResponseDTO> update(@PathVariable String email, @RequestBody UsuarioFormDTO dto) {
+		return ResponseEntity.ok().body(service.update(email, dto));
 	}
 	
-	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<UsuarioResponseDTO> delete(@PathVariable Long id) {
-		service.delete(id);
+	@DeleteMapping(value = "/{email}")
+	public ResponseEntity<UsuarioResponseDTO> delete(@PathVariable String email) {
+		service.delete(email);
 		return ResponseEntity.noContent().build();
 	}
 }

@@ -49,9 +49,9 @@ public class UsuarioService {
 	}
 	
 	@Transactional
-	public UsuarioResponseDTO update(Long id, UsuarioFormDTO dto) {
+	public UsuarioResponseDTO update(String email, UsuarioFormDTO dto) {
 		try {
-			Usuario entity = repository.getOne(id);
+			Usuario entity = repository.findByEmail(email);
 			copyDtoToEntity(dto, entity);
 			return repository.save(entity).convert();
 		} catch(EntityNotFoundException e) {
@@ -60,9 +60,9 @@ public class UsuarioService {
 	}
 	
 	@Transactional
-	public void delete(Long id) {
+	public void delete(String email) {
 		try {
-			repository.deleteById(id);
+			repository.deleteById(repository.findByEmail(email).getId());
 		} catch(EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException("ID não encontrado!");
 		}
