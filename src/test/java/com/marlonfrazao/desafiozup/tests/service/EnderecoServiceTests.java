@@ -1,5 +1,8 @@
 package com.marlonfrazao.desafiozup.tests.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityNotFoundException;
 
 import org.junit.jupiter.api.Assertions;
@@ -10,6 +13,7 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.marlonfrazao.desafiozup.dto.EnderecoFormDTO;
@@ -36,18 +40,26 @@ public class EnderecoServiceTests {
 	private long existingId;
 	private long nonExistingId;
 	private Endereco endereco;
+	private List<Endereco> list = new ArrayList<>();
 	
 	@BeforeEach
 	void setUp() throws Exception {
 		existingId = 1L;
 		nonExistingId = 1000000L;
 		endereco = EnderecoFactory.createEndereco(existingId);
+		list.add(endereco);
 		
 		Mockito.when(cepService.buscaEnderecoPorCep(ArgumentMatchers.any())).thenReturn(endereco);
 		
 		Mockito.when(repository.save(ArgumentMatchers.any())).thenReturn(endereco);
 		
 		Mockito.doThrow(EntityNotFoundException.class).when(repository).getOne(nonExistingId);
+		
+		Mockito.when(repository.findAll()).thenReturn(list);
+		
+		Mockito.doThrow(EmptyResultDataAccessException.class).when(repository).deleteById(nonExistingId);
+		
+		Mockito.doNothing().when(repository).deleteById(existingId);
 		
 	}
 	
@@ -78,5 +90,34 @@ public class EnderecoServiceTests {
 		Assertions.assertThrows(ResourceNotFoundException.class, () -> {
 			service.update(nonExistingId, formDTO);
 		});
+	}
+	
+	@Test
+	public void findAllShouldReturnList() {
+		List<EnderecoResponseDTO> result = service.findAll();
+		
+		Assertions.assertNotNull(result);
+		Assertions.assertFalse(result.isEmpty());
+		Mockito.verify(repository, Mockito.times(1)).findAll();
+		Assertions.assertEquals(ArrayList.class, result.getClass());
+	}
+	
+	@Test
+	public void deleteShouldThrowResourceNotFoundExceptionWhenIdDoesNotExists() {
+		Assertions.assertThrows(ResourceNotFoundException.class, () -> {
+			service.delete(nonExistingId);
+		});
+
+		Mockito.verify(repository, Mockito.times(1)).deleteById(nonExistingId);
+	}
+	
+	@Test
+	public void deleteShouldDoNothingWhenIdExists() {
+
+		Assertions.assertDoesNotThrow(() -> {
+			service.delete(existingId);
+		});
+
+		Mockito.verify(repository, Mockito.times(1)).deleteById(existingId);
 	}
 }
