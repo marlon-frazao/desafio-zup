@@ -65,6 +65,8 @@ public class UsuarioService {
 			repository.deleteById(repository.findByEmail(email).getId());
 		} catch(EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException("ID não encontrado!");
+		} catch(EntityNotFoundException e) {
+			throw new ResourceNotFoundException("ID não encontrado!");
 		}
 	}
 
