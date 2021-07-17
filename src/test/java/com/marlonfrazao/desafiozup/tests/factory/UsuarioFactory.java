@@ -10,7 +10,7 @@ import com.marlonfrazao.desafiozup.entities.Usuario;
 public class UsuarioFactory {
 
 	public static Usuario createUsuario() {
-		return new Usuario("Adalberto Rangel", "a.rangel@gmail.com", "123456", "41170544061", Date.from(Instant.parse("1997-05-15T00:00:00Z")));
+		return new Usuario("Adalberto Rangel", "a.rangel@gmail.com", "123456", "41170544061", Date.from(Instant.parse("1997-05-15T00:00:00Z")), null);
 	}
 	
 	public static Usuario createUsuario(Long id) {
@@ -20,10 +20,10 @@ public class UsuarioFactory {
 	}
 	
 	public static UsuarioFormDTO createUsuarioFormDTO() {
-		return new UsuarioFormDTO("Edson Arantes do Nascimento", "rei.pele@gmail.com", "123456", "16693412084", Date.from(Instant.parse("1997-05-15T00:00:00Z")));
+		return new UsuarioFormDTO("Edson Arantes do Nascimento", "rei.pele@gmail.com", "123456", "16693412084", Date.from(Instant.parse("1997-05-15T00:00:00Z")), null);
 	}
 	
 	public static UsuarioResponseDTO createUsuarioResponseDTO() {
-		return new UsuarioResponseDTO(10L, "Tony Tornado", "tornado@hotmail.com", "28962447002",  Date.from(Instant.parse("1982-05-15T00:00:00Z")));
+		return new UsuarioResponseDTO(10L, "Tony Tornado", "tornado@hotmail.com", "28962447002",  Date.from(Instant.parse("1982-05-15T00:00:00Z")), null);
 	}
 }
