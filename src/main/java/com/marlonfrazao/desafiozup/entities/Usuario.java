@@ -1,6 +1,8 @@
 package com.marlonfrazao.desafiozup.entities;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,14 +16,19 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.marlonfrazao.desafiozup.dto.UsuarioResponseDTO;
 
 
 @Entity
 @Table(name = "tb_usuario")
-public class Usuario implements Serializable {
+public class Usuario implements UserDetails, Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -32,7 +39,7 @@ public class Usuario implements Serializable {
 	
 	@Column(unique = true)
 	private String email;
-	private String senha;
+	private String password;
 	
 	@Column(unique = true)
 	private String cpf;
@@ -44,14 +51,19 @@ public class Usuario implements Serializable {
 				inverseJoinColumns = @JoinColumn(name = "endereco_id"))
 	private Set<Endereco> enderecos = new HashSet<>();
 	
+	@ManyToOne
+	@JoinColumn(name = "role_id")
+	private Role role;
+	
 	public Usuario() {}
 	
-	public Usuario(String nome, String email, String senha, String cpf, Date dataNascimento) {
+	public Usuario(String nome, String email, String password, String cpf, Date dataNascimento, Role role) {
 		this.nome = nome;
 		this.email = email;
-		this.senha = senha;
+		this.password = password;
 		this.cpf = cpf;
 		this.dataNascimento = dataNascimento;
+		this.role = role;
 	}
 	public Long getId() {
 		return id;
@@ -72,12 +84,12 @@ public class Usuario implements Serializable {
 		this.email = email;
 	}
 	
-	public String getSenha() {
-		return senha;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getCpf() {
@@ -94,6 +106,14 @@ public class Usuario implements Serializable {
 	}
 	public Set<Endereco> getEnderecos() {
 		return enderecos;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 	@Override
@@ -122,5 +142,43 @@ public class Usuario implements Serializable {
 	
 	public UsuarioResponseDTO convert() {
 		return new UsuarioResponseDTO(this, enderecos);
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return Arrays.asList(new SimpleGrantedAuthority(role.getAuthority()));
+	}
+
+	@Override
+	public String getUsername() {
+		return email;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
+	
+	public boolean hasRole(String roleName) {
+		if (role.getAuthority().equals(roleName)) {
+			return true;
+		}
+		
+		return false;
 	}
 }

@@ -17,18 +17,21 @@ public class UsuarioResponseDTO implements Serializable {
 	private String cpf;
 	private Date dataNascimento;
 	
-	Set<EnderecoResponseDTO> enderecos = new HashSet<>();
+	private Set<EnderecoResponseDTO> enderecos = new HashSet<>();
+	
+	private RoleDTO role;
 	
 	public UsuarioResponseDTO() {
 	}
 
 	public UsuarioResponseDTO(Long id, String nome, String email, String cpf,
-			Date dataNascimento) {
+			Date dataNascimento, RoleDTO role) {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.cpf = cpf;
 		this.dataNascimento = dataNascimento;
+		this.role = role;
 	}
 
 	public UsuarioResponseDTO(Usuario entity) {
@@ -37,6 +40,7 @@ public class UsuarioResponseDTO implements Serializable {
 		email = entity.getEmail();
 		cpf = entity.getCpf();
 		dataNascimento = entity.getDataNascimento();
+		role = entity.getRole().convert();
 	}
 	
 	public UsuarioResponseDTO(Usuario entity, Set<Endereco> enderecos) {
@@ -86,5 +90,13 @@ public class UsuarioResponseDTO implements Serializable {
 
 	public Set<EnderecoResponseDTO> getEnderecos() {
 		return enderecos;
+	}
+
+	public RoleDTO getRole() {
+		return role;
+	}
+
+	public void setRole(RoleDTO role) {
+		this.role = role;
 	}
 }

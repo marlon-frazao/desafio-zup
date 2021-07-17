@@ -23,33 +23,37 @@ public class UsuarioFormDTO implements Serializable{
 	private String nome;
 	
 	@NotBlank
-	@Email
+	@Email(message = "Favor entrar com um email válido")
 	private String email;
-	private String senha;
+	private String password;
 	
 	@NotBlank
-	@CPF
+	@CPF(message = "Favor entrar com um CPF válido")
 	private String cpf;
 	private Date dataNascimento;
 	
-	Set<EnderecoResponseDTO> enderecos = new HashSet<>();
+	private Set<EnderecoResponseDTO> enderecos = new HashSet<>();
+	
+	private RoleDTO role;
 	
 	public UsuarioFormDTO() {}
 	
-	public UsuarioFormDTO(String nome, String email, String senha, String cpf, Date dataNascimento) {
+	public UsuarioFormDTO(String nome, String email, String password, String cpf, Date dataNascimento, RoleDTO role) {
 		this.nome = nome;
 		this.email = email;
-		this.senha = senha;
+		this.password = password;
 		this.cpf = cpf;
 		this.dataNascimento = dataNascimento;
+		this.role = role;
 	}
 	
 	public UsuarioFormDTO(Usuario entity) {
 		nome = entity.getNome();
 		email = entity.getEmail();
-		senha = entity.getSenha();
+		password = entity.getPassword();
 		cpf = entity.getCpf();
 		dataNascimento = entity.getDataNascimento();
+		role = entity.getRole().convert();
 	}
 	
 	public UsuarioFormDTO(Usuario entity, Set<Endereco> enderecos) {
@@ -73,12 +77,12 @@ public class UsuarioFormDTO implements Serializable{
 		this.email = email;
 	}
 
-	public String getSenha() {
-		return senha;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getCpf() {
@@ -99,5 +103,13 @@ public class UsuarioFormDTO implements Serializable{
 
 	public Set<EnderecoResponseDTO> getEnderecos() {
 		return enderecos;
+	}
+
+	public RoleDTO getRole() {
+		return role;
+	}
+
+	public void setRole(RoleDTO role) {
+		this.role = role;
 	}
 }
