@@ -25,6 +25,7 @@ public class UsuarioFormDTO implements Serializable{
 	@NotBlank
 	@Email
 	private String email;
+	private String senha;
 	
 	@NotBlank
 	@CPF
@@ -35,9 +36,10 @@ public class UsuarioFormDTO implements Serializable{
 	
 	public UsuarioFormDTO() {}
 	
-	public UsuarioFormDTO(String nome, String email, String cpf, Date dataNascimento) {
+	public UsuarioFormDTO(String nome, String email, String senha, String cpf, Date dataNascimento) {
 		this.nome = nome;
 		this.email = email;
+		this.senha = senha;
 		this.cpf = cpf;
 		this.dataNascimento = dataNascimento;
 	}
@@ -45,6 +47,7 @@ public class UsuarioFormDTO implements Serializable{
 	public UsuarioFormDTO(Usuario entity) {
 		nome = entity.getNome();
 		email = entity.getEmail();
+		senha = entity.getSenha();
 		cpf = entity.getCpf();
 		dataNascimento = entity.getDataNascimento();
 	}
@@ -68,6 +71,14 @@ public class UsuarioFormDTO implements Serializable{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	public String getCpf() {

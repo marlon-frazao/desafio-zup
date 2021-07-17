@@ -32,6 +32,7 @@ public class Usuario implements Serializable {
 	
 	@Column(unique = true)
 	private String email;
+	private String senha;
 	
 	@Column(unique = true)
 	private String cpf;
@@ -45,9 +46,10 @@ public class Usuario implements Serializable {
 	
 	public Usuario() {}
 	
-	public Usuario(String nome, String email, String cpf, Date dataNascimento) {
+	public Usuario(String nome, String email, String senha, String cpf, Date dataNascimento) {
 		this.nome = nome;
 		this.email = email;
+		this.senha = senha;
 		this.cpf = cpf;
 		this.dataNascimento = dataNascimento;
 	}
@@ -69,6 +71,15 @@ public class Usuario implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
 	public String getCpf() {
 		return cpf;
 	}
